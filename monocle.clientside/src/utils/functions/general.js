@@ -35,6 +35,7 @@ export function getSortedObject(unsortedObject) {
     return sortedObject;
 }
 
+// adds new tweet to sentiment-based tweet temporary array
 export function mapSentimentBasedTweets(tweet, displaySentimentTweets, tempDisplaySentimentTweets) {
     if (tempDisplaySentimentTweets.findIndex(existTweet => existTweet.id === tweet.id) === -1) {
         tempDisplaySentimentTweets.push(tweet);
@@ -49,6 +50,17 @@ export function mapSentimentBasedTweets(tweet, displaySentimentTweets, tempDispl
     return tempDisplaySentimentTweets;
 }
 
-export function mapGeneralCaseTweets() {
-    
+// adds new tweet to general tweet temporary array
+export function mapGeneralCaseTweets(tweet, displayGeneralTweets, bufferGeneralTweets) {
+    if (displayGeneralTweets.length === 0) {
+        return bufferGeneralTweets.slice(0, 20);
+    }
+
+    if (displayGeneralTweets.findIndex(existTweet => existTweet.id === tweet.id) === -1) {
+        displayGeneralTweets.push(tweet);
+    }
+
+    displayGeneralTweets.sort((a, b) => { return b.followers - a.followers; });
+  
+    return displayGeneralTweets.slice(0, 20);
 }
