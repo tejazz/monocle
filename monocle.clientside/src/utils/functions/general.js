@@ -34,3 +34,21 @@ export function getSortedObject(unsortedObject) {
 
     return sortedObject;
 }
+
+export function mapSentimentBasedTweets(tweet, displaySentimentTweets, tempDisplaySentimentTweets) {
+    if (tempDisplaySentimentTweets.findIndex(existTweet => existTweet.id === tweet.id) === -1) {
+        tempDisplaySentimentTweets.push(tweet);
+    }
+
+    tempDisplaySentimentTweets.sort((a, b) => { return b.followers - a.followers; });
+
+    if (displaySentimentTweets.length >= 20) {
+        tempDisplaySentimentTweets = tempDisplaySentimentTweets.slice(0, 20);
+    }
+
+    return tempDisplaySentimentTweets;
+}
+
+export function mapGeneralCaseTweets() {
+    
+}

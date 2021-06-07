@@ -5,45 +5,46 @@ import * as FileSaver from 'file-saver';
 import * as xlsx from 'xlsx';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Dashboard from './pages/dashboard/dashboard';
+import { mapSentimentBasedTweets } from './utils/functions/general';
 
+// TODO: Remove direct URL to include dynamic server URL
 const socket = clientSocket('http://localhost:9890');
 
-const InitialState = {
-  tweetCount: 0,
-  positiveTweetCount: 0,
-  negativeTweetCount: 0,
-  neutralTweetCount: 0,
-  startCounter: 0,
-  verifiedLocationTweetCount: 0,
-  unverifiedLocationTweetCount: 0,
-  locations: {},
-  tweetBuffer: {},
-  displayGeneralTweet: [],
-  displayPositiveTweet: [],
-  displayNegativeTweet: [],
-  displayNeutralTweet: [],
-  displayVerifiedTweet: [],
-  displayUnverifiedTweet: [],
-  hoverCountryStatus: {},
-  searchTerm: '',
-};
+const InitialState = () => {
+  return {
+    tweetCount: 0,
+    positiveTweetCount: 0,
+    negativeTweetCount: 0,
+    neutralTweetCount: 0,
+    startCounter: 0,
+    verifiedLocationTweetCount: 0,
+    unverifiedLocationTweetCount: 0,
+    locations: {},
+    tweetBuffer: {},
+    displayGeneralTweet: [],
+    displayPositiveTweet: [],
+    displayNegativeTweet: [],
+    displayNeutralTweet: [],
+    displayVerifiedTweet: [],
+    displayUnverifiedTweet: [],
+    hoverCountryStatus: {},
+    searchTerm: 'Coronavirus',
+  };
+}
 
 class App extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      ...InitialState,
-      searchTerm: 'Coronavirus',
-    };
+    this.state = InitialState();
   }
 
-  beforeReload = e => { 
-    socket.emit('force stop stream', () => {});
+  beforeReload = e => {
+    socket.emit('force stop stream', () => { });
 
     e.preventDefault();
     e.returnValue = '';
- }
+  }
 
   componentDidMount = () => {
     window.addEventListener("beforeunload", this.beforeReload);
@@ -69,6 +70,8 @@ class App extends React.PureComponent {
     let { tweetBuffer, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, searchTerm } = this.state;
     let tempTweetBuffer = {};
     let tempDisplayGeneralTweet = [];
+
+    // initialize with current state values 
     let tempDisplayPositiveTweet = displayPositiveTweet;
     let tempDisplayNegativeTweet = displayNegativeTweet;
     let tempDisplayNeutralTweet = displayNeutralTweet;
@@ -79,6 +82,8 @@ class App extends React.PureComponent {
     let tempDisplayUnverifiedTweet = displayUnverifiedTweet;
 
     let tempTweetBufferKeys = Object.keys(tweetBuffer);
+
+    tweetCount += 1;
 
     if (tempTweetBufferKeys.length >= 10000) {
       // reinitialize tempTweetBuffer to empty
@@ -91,13 +96,12 @@ class App extends React.PureComponent {
       if (tempTweetBuffer[tweet.id] === undefined) tempTweetBuffer[tweet.id] = tweet;
     }
 
-     // mapping top trending tweets
-     tempTweetBufferKeys.sort((a, b) => { return tempTweetBuffer[b].followers - tempTweetBuffer[a].followers; });
+    // mapping top trending tweets
+    tempTweetBufferKeys.sort((a, b) => { return tempTweetBuffer[b].followers - tempTweetBuffer[a].followers; });
 
     // check for verified location in tweet
     Countries.map((country) => {
       if (tweet.location && tweet.location.includes(country)) {
-        tempVerifiedLocationTweetCount += 1;
         if (tempDisplayVerifiedTweet.findIndex(el => el.id === tweet.id) === -1) {
           tempDisplayVerifiedTweet.push(tweet);
         }
@@ -108,7 +112,8 @@ class App extends React.PureComponent {
           tempDisplayVerifiedTweet = tempDisplayVerifiedTweet.slice(0, 20);
         }
 
-        return locations[country] ? tempLocations[country] = locations[country] + 1 : tempLocations[country] = 1;
+        tempLocations[country] = locations[country] ? locations[country] + 1 : 1;
+        tempVerifiedLocationTweetCount += 1;
       }
     });
 
@@ -123,7 +128,7 @@ class App extends React.PureComponent {
       }
     }
 
-    // map general and sentiment based tweets into segmented arrays of size: 20
+    // map general tweets
     if (displayGeneralTweet.length > 0) {
       tempDisplayGeneralTweet = displayGeneralTweet.findIndex(el => el.id === tweet.id) === -1 ? displayGeneralTweet.concat(tweet) : displayGeneralTweet;
       tempDisplayGeneralTweet.sort((a, b) => { return b.followers - a.followers; });
@@ -133,46 +138,23 @@ class App extends React.PureComponent {
       tempDisplayGeneralTweet = Object.values(tempTweetBuffer).slice(0, 20);
     }
 
+    // map tweets based on sentiment score
     if (tweet.sentiments.score > 0) {
-      // map positive sentiment tweets
-      if (displayPositiveTweet.length >= 20) {
-        tempDisplayPositiveTweet = tempDisplayPositiveTweet.concat(tweet);
-        tempDisplayPositiveTweet.sort((a, b) => { return b.followers - a.followers; });
-
-        tempDisplayPositiveTweet = tempDisplayPositiveTweet.slice(0, 20);
-      } else {
-        tempDisplayPositiveTweet = tempDisplayPositiveTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayPositiveTweet.concat(tweet) : tempDisplayPositiveTweet;
-        tempDisplayPositiveTweet.sort((a, b) => { return b.followers - a.followers; });
-      }
+      tempDisplayPositiveTweet = mapSentimentBasedTweets(tweet, displayPositiveTweet, tempDisplayPositiveTweet);
+      positiveTweetCount += 1;
     } else if (tweet.sentiments.score < 0) {
-      // map negative sentiment tweets
-      if (displayNegativeTweet.length >= 20) {
-        tempDisplayNegativeTweet = tempDisplayNegativeTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayNegativeTweet.concat(tweet) : tempDisplayNegativeTweet;
-        tempDisplayNegativeTweet.sort((a, b) => { return b.followers - a.followers; });
-
-        tempDisplayNegativeTweet = tempDisplayNegativeTweet.slice(0, 20);
-      } else {
-        tempDisplayNegativeTweet = tempDisplayNegativeTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayNegativeTweet.concat(tweet) : tempDisplayNegativeTweet;
-        tempDisplayNegativeTweet.sort((a, b) => { return b.followers - a.followers; });
-      }
+      tempDisplayNegativeTweet = mapSentimentBasedTweets(tweet, displayNegativeTweet, tempDisplayNegativeTweet);
+      negativeTweetCount += 1;
     } else {
-      // map neutral sentiment tweets
-      if (displayNeutralTweet.length >= 20) {
-        tempDisplayNeutralTweet = tempDisplayNeutralTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayNeutralTweet.concat(tweet) : tempDisplayNeutralTweet;
-        tempDisplayNeutralTweet.sort((a, b) => { return b.followers - a.followers; });
-
-        tempDisplayNeutralTweet = tempDisplayNeutralTweet.slice(0, 20);
-      } else {
-        tempDisplayNeutralTweet = tempDisplayNeutralTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayNeutralTweet.concat(tweet) : tempDisplayNeutralTweet;
-        tempDisplayNeutralTweet.sort((a, b) => { return b.followers - a.followers; });
-      }
+      tempDisplayNeutralTweet = mapSentimentBasedTweets(tweet, displayNeutralTweet, tempDisplayNeutralTweet);
+      neutralTweetCount += 1;
     }
 
     this.setState({
-      tweetCount: tweetCount + 1,
-      positiveTweetCount: (tweet.sentiments.score > 0) ? positiveTweetCount + 1 : positiveTweetCount,
-      negativeTweetCount: (tweet.sentiments.score < 0) ? negativeTweetCount + 1 : negativeTweetCount,
-      neutralTweetCount: (tweet.sentiments.score === 0) ? neutralTweetCount + 1 : neutralTweetCount,
+      tweetCount,
+      positiveTweetCount,
+      negativeTweetCount,
+      neutralTweetCount,
       displayGeneralTweet: tempDisplayGeneralTweet,
       displayPositiveTweet: tempDisplayPositiveTweet,
       displayNegativeTweet: tempDisplayNegativeTweet,
@@ -208,18 +190,14 @@ class App extends React.PureComponent {
     this.setState({ hoverCountryStatus });
   }
 
-  resetStateSearchTerm = (searchTerm) => {
+  resetStateSearchTerm = async (searchTerm) => {
     if (!socket.connected) {
       alert('No connection available. Please check the connection.');
       return;
     }
 
-    this.setState({
-      ...InitialState,
-      searchTerm,
-    }, () => {
-      socket.emit('update track', searchTerm);
-    });
+    await this.setState({ ...InitialState(), searchTerm });
+    socket.emit('update track', searchTerm);
   }
 
   render() {

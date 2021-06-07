@@ -19,7 +19,7 @@ let stream = T.stream('statuses/filter', { track: searchTerm });
 let isStreamStopped = false;
 
 function updateStream(socket, term) {
-    console.log(`setting up new stream with track: ${term}`);
+    console.log(`New Stream Track Setup with Term: ${term}`);
     if (stream) {
         stream.on('tweet', function (tweet) { return });
         stream.stop();
