@@ -29,8 +29,6 @@ function updateStream(socket, term) {
     stream = T.stream('statuses/filter', { 'track': term });
 
     stream.on('tweet', function (tweet) {
-        console.log('tweeting');
-
         let TweetObject = getTweetObject(tweet);
 
         socket.emit('latest tweets', TweetObject);
