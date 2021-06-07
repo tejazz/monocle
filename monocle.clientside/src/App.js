@@ -5,7 +5,7 @@ import * as FileSaver from 'file-saver';
 import * as xlsx from 'xlsx';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Dashboard from './pages/dashboard/dashboard';
-import { mapSentimentBasedTweets } from './utils/functions/general';
+import { mapGeneralCaseTweets, mapSentimentBasedTweets } from './utils/functions/general';
 
 // TODO: Remove direct URL to include dynamic server URL
 const socket = clientSocket('http://localhost:9890');
@@ -129,14 +129,7 @@ class App extends React.PureComponent {
     }
 
     // map general tweets
-    if (displayGeneralTweet.length > 0) {
-      tempDisplayGeneralTweet = displayGeneralTweet.findIndex(el => el.id === tweet.id) === -1 ? displayGeneralTweet.concat(tweet) : displayGeneralTweet;
-      tempDisplayGeneralTweet.sort((a, b) => { return b.followers - a.followers; });
-
-      tempDisplayGeneralTweet = tempDisplayGeneralTweet.slice(0, 20);
-    } else {
-      tempDisplayGeneralTweet = Object.values(tempTweetBuffer).slice(0, 20);
-    }
+    tempDisplayGeneralTweet = mapGeneralCaseTweets(tweet, displayGeneralTweet, Object.values(tempTweetBuffer));
 
     // map tweets based on sentiment score
     if (tweet.sentiments.score > 0) {
