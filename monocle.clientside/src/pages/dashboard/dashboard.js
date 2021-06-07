@@ -41,7 +41,7 @@ class dashboard extends PureComponent {
                         handlePowerToggleParent={this.handlePowerToggleParent}
                     />
                 </div>
-                {(this.state.isOverlayOpen) ? <div className='Overlay' /> : null}
+                {(this.state.isOverlayOpen) ? <div className='Overlay'/> : null}
                 <CountryStatus hoverCountryStatus={hoverCountryStatus} />
                 <ProgressCircle verifiedPercent={verifiedPercent} />
                 <StatisticDisplay
