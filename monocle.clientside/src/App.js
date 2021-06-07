@@ -17,7 +17,7 @@ const InitialState = {
   verifiedLocationTweetCount: 0,
   unverifiedLocationTweetCount: 0,
   locations: {},
-  tweetBuffer: [],
+  tweetBuffer: {},
   displayGeneralTweet: [],
   displayPositiveTweet: [],
   displayNegativeTweet: [],
@@ -55,7 +55,7 @@ class App extends React.PureComponent {
 
   mapIncomingStream = (tweet) => {
     let { tweetBuffer, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, searchTerm } = this.state;
-    let tempTweetBuffer = [];
+    let tempTweetBuffer = {};
     let tempDisplayGeneralTweet = [];
     let tempDisplayPositiveTweet = displayPositiveTweet;
     let tempDisplayNegativeTweet = displayNegativeTweet;
@@ -66,42 +66,50 @@ class App extends React.PureComponent {
     let tempDisplayVerifiedTweet = displayVerifiedTweet;
     let tempDisplayUnverifiedTweet = displayUnverifiedTweet;
 
-    if (tweetBuffer.length >= 10000) {
+    let tempTweetBufferKeys = Object.keys(tweetBuffer);
+
+    if (tempTweetBufferKeys.length >= 10000) {
       // reinitialize tempTweetBuffer to empty
       // save all the tweets in the buffer
       this.exportToExcel(tweetBuffer, `${searchTerm}-${tweet.timestamp}`);
 
-      tempTweetBuffer = [tweet];
+      tempTweetBuffer = {};
+      tempTweetBuffer[tweet.id] = tweet;
     } else {
-      tempTweetBuffer = tempTweetBuffer.findIndex(el => el.id === tweet.id) === -1 ? tweetBuffer.concat(tweet) : tempTweetBuffer;
+      if (tempTweetBuffer[tweet.id] === undefined) tempTweetBuffer[tweet.id] = tweet;
     }
+
+     // mapping top trending tweets
+     tempTweetBufferKeys.sort((a, b) => { return tempTweetBuffer[b].followers - tempTweetBuffer[a].followers; });
 
     // check for verified location in tweet
     Countries.map((country) => {
       if (tweet.location && tweet.location.includes(country)) {
         tempVerifiedLocationTweetCount += 1;
-        tempDisplayVerifiedTweet = tempDisplayVerifiedTweet.concat(tweet);
+        if (tempDisplayVerifiedTweet.findIndex(el => el.id === tweet.id) === -1) {
+          tempDisplayVerifiedTweet.push(tweet);
+        }
+
         tempDisplayVerifiedTweet.sort((a, b) => b.followers - a.followers);
 
         if (tempDisplayVerifiedTweet.length >= 20) {
           tempDisplayVerifiedTweet = tempDisplayVerifiedTweet.slice(0, 20);
         }
 
-        return (locations[country]) ? tempLocations[country] = locations[country] + 1 : tempLocations[country] = 1;
+        return locations[country] ? tempLocations[country] = locations[country] + 1 : tempLocations[country] = 1;
       }
     });
 
     if (tempVerifiedLocationTweetCount !== verifiedLocationTweetCount) {
       tempUnverifiedLocationTweetCount += 1;
-      tempDisplayUnverifiedTweet = tempDisplayUnverifiedTweet.concat(tweet);
+      if (tempDisplayUnverifiedTweet.findIndex(el => el.id === tweet.id) === -1) {
+        tempDisplayUnverifiedTweet.push(tweet);
+      }
 
       if (tempDisplayUnverifiedTweet.length >= 20) {
         tempDisplayUnverifiedTweet = tempDisplayUnverifiedTweet.sort((a, b) => b.followers - a.followers).slice(0, 20);
       }
     }
-
-    // mapping top trending tweets
-    tempTweetBuffer.sort((a, b) => { return b.followers - a.followers; });
 
     // map general and sentiment based tweets into segmented arrays of size: 20
     if (displayGeneralTweet.length > 0) {
@@ -110,10 +118,11 @@ class App extends React.PureComponent {
 
       tempDisplayGeneralTweet = tempDisplayGeneralTweet.slice(0, 20);
     } else {
-      tempDisplayGeneralTweet = tempTweetBuffer.slice(0, 20);
+      tempDisplayGeneralTweet = Object.values(tempTweetBuffer).slice(0, 20);
     }
 
     if (tweet.sentiments.score > 0) {
+      // map positive sentiment tweets
       if (displayPositiveTweet.length >= 20) {
         tempDisplayPositiveTweet = tempDisplayPositiveTweet.concat(tweet);
         tempDisplayPositiveTweet.sort((a, b) => { return b.followers - a.followers; });
@@ -124,6 +133,7 @@ class App extends React.PureComponent {
         tempDisplayPositiveTweet.sort((a, b) => { return b.followers - a.followers; });
       }
     } else if (tweet.sentiments.score < 0) {
+      // map negative sentiment tweets
       if (displayNegativeTweet.length >= 20) {
         tempDisplayNegativeTweet = tempDisplayNegativeTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayNegativeTweet.concat(tweet) : tempDisplayNegativeTweet;
         tempDisplayNegativeTweet.sort((a, b) => { return b.followers - a.followers; });
@@ -134,6 +144,7 @@ class App extends React.PureComponent {
         tempDisplayNegativeTweet.sort((a, b) => { return b.followers - a.followers; });
       }
     } else {
+      // map neutral sentiment tweets
       if (displayNeutralTweet.length >= 20) {
         tempDisplayNeutralTweet = tempDisplayNeutralTweet.findIndex(el => el.id === tweet.id) === -1 ? tempDisplayNeutralTweet.concat(tweet) : tempDisplayNeutralTweet;
         tempDisplayNeutralTweet.sort((a, b) => { return b.followers - a.followers; });
@@ -200,7 +211,6 @@ class App extends React.PureComponent {
   }
 
   render() {
-    console.log('Rendered component: App');
     const { tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, hoverCountryStatus, searchTerm } = this.state;
 
     const verifiedPercent = (verifiedLocationTweetCount === 0 || tweetCount === 0) ? 0 : Math.round(((verifiedLocationTweetCount / tweetCount) * 100 + Number.EPSILON) * 100) / 100;
