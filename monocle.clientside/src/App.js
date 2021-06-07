@@ -38,8 +38,20 @@ class App extends React.PureComponent {
     };
   }
 
+  beforeReload = e => { 
+    socket.emit('force stop stream', () => {});
+
+    e.preventDefault();
+    e.returnValue = '';
+ }
+
   componentDidMount = () => {
+    window.addEventListener("beforeunload", this.beforeReload);
     socket.on('latest tweets', this.mapIncomingStream);
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener("beforeunload", this.beforeReload);
   }
 
   exportToExcel = (rawData, filename) => {
