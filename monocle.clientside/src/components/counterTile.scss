@@ -1,0 +1,25 @@
+@import '../App.scss';
+
+.CounterTile {
+    color: $primary-white;
+    font-family: 'Bebas';
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid $primary-violet;
+
+    &__Label {
+        margin: 0;
+        opacity: 0.4;
+        font-size: $font-xl;
+    }
+
+    &__Count {
+        margin: 0;
+        margin-left: 5px;
+        font-size: $font-xxl;
+        margin-bottom: -3px;
+        opacity: 0.8;
+    }
+}

@@ -1,0 +1,52 @@
+@import '../App.scss';
+
+.TweetItem {
+    font-family: 'Bebas';
+    color: $primary-white;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    font-size: $font-medium;
+
+    &__Group {
+        display: flex;
+    }
+
+    &__User, &__Location {
+        margin: 0;
+        margin-right: 10px;
+        color: $primary-violet;
+        opacity: 0.6;
+    }
+
+    &__Followers, &__Timestamp {
+        margin: 0;
+        opacity: 0.6;
+    }
+
+    &__Tweet {
+        margin: 3px 0;
+        font-weight: 300;
+        font-family: 'Bebas-Light';
+        font-size: $font-xl;
+        opacity: 0.8;
+    }
+
+    &__Sentiment {
+        margin: 0;
+        margin-left: 10px;
+        opacity: 0.8;
+
+        &--Positive {
+            color: #c7ea46;
+        }
+
+        &--Negative {
+            color: #ed2939;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}

@@ -1,0 +1,62 @@
+@import '../App.scss';
+
+.LegendSection {
+    background-color: $grey-light;
+    width: fit-content;
+    padding: 20px 30px;
+    position: absolute;
+    right: 30px;
+    margin-top: 40px;
+
+    .LegendItem {
+        display: flex;
+        align-items: center;
+        margin-bottom: 8px;
+
+        &__Color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+
+            &--1 {
+                background-color: $red-dark;
+            }
+
+            &--2 {
+                background-color: $red-light;
+            }
+
+            &--3 {
+                background-color: $yellow-light;
+            }
+
+            &--4 {
+                background-color: $yellow-medium;
+            }
+            
+            &--5 {
+                background-color: $yellow-dark;
+            }
+            
+            &--6 {
+                background-color: $green-dark;
+            }
+            
+            &--7 {
+                background-color: $green-medium;
+            }
+            
+            &--8 {
+                background-color: $green-light;
+            }
+        }
+
+        &__Label {
+            font-size: $font-medium;
+            margin: 0;
+            font-family: 'Bebas';
+            color: $primary-white;
+            opacity: 0.6;
+        }
+    }
+}

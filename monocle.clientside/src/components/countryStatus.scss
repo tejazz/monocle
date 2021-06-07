@@ -1,0 +1,36 @@
+@import '../App.scss';
+
+.CountryStatus {
+    font-family: 'Bebas';
+    color: $primary-white;
+    position: fixed;
+    top: 10vh;
+    left: 30px;
+    background-color: $grey-light;
+    padding: 20px 40px;
+
+    &__Country {
+        margin: 0;
+        font-size: $font-xl;
+        opacity: 0.6;
+    }
+
+    &__Percent {
+        display: flex;
+        align-items: flex-end;
+    }
+    
+    &__PercentCount {
+        margin: 0;
+        font-size: $font-xxl;
+        margin-bottom: -3px;
+    }
+
+    &__PercentCaption {
+        margin: 0;
+        opacity: 0.4;
+        margin-right: 5px;
+        font-size: $font-xl;
+        color: $primary-violet;
+    }
+}

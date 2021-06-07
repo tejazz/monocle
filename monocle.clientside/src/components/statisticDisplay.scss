@@ -1,0 +1,9 @@
+@import '../App.scss';
+
+.StatisticDisplay {
+    position: fixed;
+    background-color: $grey-light;
+    padding: 20px 40px;
+    left: 30px;
+    bottom: 30px;
+}

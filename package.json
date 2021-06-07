@@ -1,0 +1,15 @@
+{
+  "name": "monocle",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd ./monocle.clientside && npm start\" \"cd ./monocle.serverside && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tarique Ejaz",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^6.2.0"
+  }
+}

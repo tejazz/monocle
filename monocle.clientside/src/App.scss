@@ -1,0 +1,34 @@
+// font-families
+@font-face {
+  src: url('./assets/fonts/Bebas-Regular.otf');
+  font-family: 'Bebas';
+};
+
+@font-face {
+  src: url('./assets/fonts/Bebas-Light.ttf');
+  font-family: 'Bebas-Light';
+};
+
+// font-sizes
+$font-medium: 18px;
+$font-xl: 20px;
+$font-xxl: 30px;
+
+// colors
+$primary-white: white;
+$grey-dark: #272e38;
+$grey-light: #37404f;
+$primary-violet: #dda0dd;
+$transparent: transparent;
+$red-dark: #ed2939;
+$red-light: #fa8072;
+$yellow-light: #fcf4a3;
+$yellow-medium: #fee12b;
+$yellow-dark: #9dc183;
+$green-dark: #4f7942;
+$green-medium: #98fb98;
+$green-light: #c7ea46;
+
+// background styling
+
+// spacings

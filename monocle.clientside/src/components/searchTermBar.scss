@@ -1,0 +1,25 @@
+@import '../App.scss';
+
+.SearchTermBar {
+    width: 50%;
+
+    &__Input {
+        width: 100%;
+        background-color: $transparent;
+        border: none;
+        outline: none;
+        padding: 5px 40px;
+        border-bottom: 1px solid $grey-light;
+        border-radius: 12px;
+        font-family: 'Bebas';
+        font-size: $font-medium;
+        color: $primary-white;
+        opacity: 0.4;
+        position: relative;
+        z-index: 5;
+
+        &:focus, &:hover {
+            border-bottom: 1px solid $primary-white;
+        }
+    }
+}

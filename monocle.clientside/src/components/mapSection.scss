@@ -1,0 +1,23 @@
+@import '../App.scss';
+
+.MapSection {
+    position: relative;
+    z-index: 1;
+
+    &__SearchTerm {
+        position: absolute;
+        bottom: 0;
+        color: $primary-white;
+        text-align: center;
+        width: 100%;
+        font-family: Bebas;
+        font-size: $font-xl;
+
+        &--Term {
+            opacity: 0.6;
+            margin-left: 5px;
+            width: fit-content;
+            color: $primary-violet;
+        }
+    }
+}
