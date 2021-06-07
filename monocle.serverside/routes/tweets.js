@@ -19,7 +19,7 @@ let stream = T.stream('statuses/filter', { track: searchTerm });
 let isStreamStopped = false;
 
 function updateStream(socket, term) {
-    console.log(`setting up new stream with track: ${term}`);
+    console.log(`New Stream Track Setup with Term: ${term}`);
     if (stream) {
         stream.on('tweet', function (tweet) { return });
         stream.stop();
@@ -29,8 +29,6 @@ function updateStream(socket, term) {
     stream = T.stream('statuses/filter', { 'track': term });
 
     stream.on('tweet', function (tweet) {
-        console.log('tweeting');
-
         let TweetObject = getTweetObject(tweet);
 
         socket.emit('latest tweets', TweetObject);
@@ -61,34 +59,39 @@ function getTweetObject(tweet) {
 
 module.exports = (io) => {
     io.on('connection', function (socket) {
-        console.log('sockets connected');
+        console.log('Socket Connection: Established');
 
         socket.on('update track', (term) => {
             updateStream(this, term);
         });
 
         socket.on('stop stream', () => {
-            console.log('stopped streaming tweets');
+            console.log('Streaming Tweets: Stopped');
             stream.stop();
             isStreamStopped = true;
         });
 
+        socket.on('force stop stream', () => {
+            if (!isStreamStopped) {
+                console.log('Streaming Tweets: Focibly Stopped');
+                stream.stop();
+            }
+        });
+
         socket.on('restart stream', () => {
-            console.log('restarted streaming tweets');
+            console.log('Streaming Tweets: Restarted');
             stream.start();
             isStreamStopped = false;
         });
 
         socket.on('start stream', () => {
-            console.log('started streaming tweets');
+            console.log('Streaming Tweets: Started');
 
             if (!isStreamStopped) {
                 stream.stop();
             }
 
             stream.on('tweet', function (tweet) {
-                console.log('tweeting');
-
                 let TweetObject = getTweetObject(tweet);
 
                 socket.emit('latest tweets', TweetObject);
@@ -105,7 +108,7 @@ module.exports = (io) => {
                 isStreamStopped = true;
             } 
 
-            console.log('disconnected');
+            console.log('Disconnected');
         });
 
         /* monitoring stream calls */
@@ -114,20 +117,21 @@ module.exports = (io) => {
         });
 
         stream.on('disconnect', function (disconnectMessage) {
-            console.log('disconnected');
+            console.log('Disconnected');
             console.log(disconnectMessage);
         });
 
         stream.on('error', (ErrorMessage) => {
+            console.log('Error:');
             console.log(ErrorMessage);
         });
 
         stream.on('connect', (request) => {
-            console.log('connecting to twitter');
+            console.log('Twitter API: Connection Pending');
         });
 
         stream.on('connected', function (response) {
-            console.log('connected to twitter');
+            console.log('Twitter API: Connected');
         });
 
     });

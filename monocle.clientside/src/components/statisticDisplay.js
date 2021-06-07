@@ -3,8 +3,6 @@ import './statisticDisplay.scss';
 import CounterTile from './counterTile';
 
 const StatisticDisplay = (props) => {
-    console.log('Rendered component: Statistic Display Section');
-
     return (
         <div className='StatisticDisplay'>
             <CounterTile tileLabel={'Total'} tileCount={props.tweetCount}/>

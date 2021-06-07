@@ -3,7 +3,6 @@ import './counterTile.scss';
 import Numeral from 'numeral';
 
 const CounterTile = (props) => {
-    console.log(`Rendered component: ${props.tileLabel} Tile`);
     const displayCount = Numeral(props.tileCount).format('0, 0');
 
     return (

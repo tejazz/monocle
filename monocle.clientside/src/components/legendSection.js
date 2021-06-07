@@ -5,6 +5,9 @@ const LegendSection = () => {
     return (
         <div className='LegendSection'>
             <div className='LegendItem'>
+                <p className='LegendItem__Label'>Tweets Percentage (Verified)</p>
+            </div>
+            <div className='LegendItem'>
                 <div className='LegendItem__Color LegendItem__Color--1'></div>
                 <p className='LegendItem__Label'>Less Than 3%</p>
             </div>
