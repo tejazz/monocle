@@ -3,7 +3,6 @@ import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simp
 import './mapSection.scss';
 
 const MapSection = (props) => {
-    console.log('Rendered component: Map Section');
     const { locations, verifiedLocationTweetCount } = props;
 
     const renderMap = () => (

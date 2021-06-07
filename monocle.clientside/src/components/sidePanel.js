@@ -51,7 +51,7 @@ class SidePanel extends React.PureComponent {
                     </div>
 
                     <div className='TweetSection'>
-                        {finalDisplayTweets.map((tweet) => <TweetObject tweet={tweet} />)}
+                        {finalDisplayTweets.map((tweet) => <TweetObject key={tweet.id} tweet={tweet} />)}
                     </div>
                 </>
             );
@@ -129,7 +129,6 @@ class SidePanel extends React.PureComponent {
     }
 
     render() {
-        console.log('Rendered Component: Side Panel');
         const { tweetType, openSidePanel, sidePanelSegment } = this.state;
 
         const SidePanelClass = openSidePanel ? 'SidePanel' : 'SidePanel SidePanel--Hide';

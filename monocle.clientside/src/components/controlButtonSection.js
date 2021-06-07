@@ -7,8 +7,6 @@ class ControlButtonSection extends React.PureComponent {
     handlePowerToggle = () => this.props.handlePowerToggleParent('control');
 
     render() {
-        console.log('Rendered component: Control Button Section');
-
         return (
             <div className='ControlButtonSection'>
                 <img
