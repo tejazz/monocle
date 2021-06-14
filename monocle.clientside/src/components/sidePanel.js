@@ -12,9 +12,9 @@ class SidePanel extends React.PureComponent {
 
         this.state = {
             openSidePanel: false,
-            tweetType: 'general',       // [general, positive, negative, neutral, verified]
-            sidePanelSegment: '',       // [tweet, keyword, trend]
-            secondaryType: 'keyword',     // [keyword, location]
+            tweetType: 'general',           // [general, positive, negative, neutral, verified]
+            sidePanelSegment: '',           // [tweet, keyword, trend]
+            secondaryType: 'keyword',       // [keyword, location]
         };
     }
 
@@ -133,12 +133,14 @@ class SidePanel extends React.PureComponent {
 
     getCurrentSidePanelIconClass = (isSelected, sidePanelSegment) => {
         let isActive = isSelected === sidePanelSegment;
+        let inactiveClass = 'SidePanel__Icon';
+        let activeClass = `${inactiveClass} SidePanel__Icon--Active`;
 
         switch(sidePanelSegment) {
-            case 'tweet': return isActive  ? 'SidePanel__Icon SidePanel__Icon--Active' : 'SidePanel__Icon';
-            case 'keyword': return isActive ? 'SidePanel__Icon SidePanel__Icon--Keyword SidePanel__Icon--Active' : 'SidePanel__Icon SidePanel__Icon--Keyword';
-            case 'trend': return isActive ? 'SidePanel__Icon SidePanel__Icon--Trend SidePanel__Icon--Active' : 'SidePanel__Icon SidePanel__Icon--Trend'
-            default: return isActive ? 'SidePanel__Icon SidePanel__Icon--Active' : 'SidePanel__Icon';
+            case 'tweet': return isActive  ? activeClass : inactiveClass;
+            case 'keyword': return isActive ? `${activeClass} SidePanel__Icon--Keyword` : `${inactiveClass} SidePanel__Icon--Keyword`;
+            case 'trend': return isActive ? `${activeClass} SidePanel__Icon--Trend` : `${inactiveClass} SidePanel__Icon--Trend`;
+            default: return isActive  ? activeClass : inactiveClass;
         }
     }
 
