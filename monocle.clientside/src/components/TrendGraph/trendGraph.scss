@@ -1,0 +1,17 @@
+@import '../../App.scss';
+
+.trend {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    padding: 15px;
+
+    &__title {
+        font-size: $font-medium;
+        margin: 0;
+        font-family: 'Bebas';
+        color: $primary-white;
+        opacity: 0.6;
+    }
+}
