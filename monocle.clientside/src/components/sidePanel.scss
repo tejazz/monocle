@@ -21,7 +21,7 @@
     margin-left: -80px;
     margin-top: 60vh;
     margin-bottom: 0;
-    opacity: 0.6;
+    opacity: 0.3;
     cursor: pointer;
 
     &:hover {
@@ -30,6 +30,10 @@
 
     &--Keyword {
         margin-bottom: -90px;
+    }
+
+    &--Trend {
+      margin-bottom: -180px;
     }
 
     &--Active {

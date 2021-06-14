@@ -23,7 +23,7 @@ class dashboard extends PureComponent {
     };
 
     render() {
-        const { startStreaming, stopStreaming, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, hoverCountryStatus, isConnected, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, resetStateSearchTerm, verifiedPercent, locations } = this.props;
+        const { startStreaming, stopStreaming, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, hoverCountryStatus, isConnected, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, resetStateSearchTerm, verifiedPercent, locations, trend } = this.props;
 
         return (
             <div className='Dashboard'>
@@ -61,6 +61,7 @@ class dashboard extends PureComponent {
                     displayVerifiedTweet={displayVerifiedTweet}
                     displayUnverifiedTweet={displayUnverifiedTweet}
                     locations={locations}
+                    trend={trend}
                 />
             </div>
         );
