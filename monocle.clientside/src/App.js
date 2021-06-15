@@ -206,7 +206,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, hoverCountryStatus, searchTerm } = this.state;
+    const { tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, hoverCountryStatus, searchTerm, trend } = this.state;
 
     const verifiedPercent = (verifiedLocationTweetCount === 0 || tweetCount === 0) ? 0 : Math.round(((verifiedLocationTweetCount / tweetCount) * 100 + Number.EPSILON) * 100) / 100;
 
@@ -238,6 +238,7 @@ class App extends React.PureComponent {
                 isConnected={socket.connected}
                 resetStateSearchTerm={this.resetStateSearchTerm}
                 verifiedPercent={verifiedPercent}
+                trend={trend}
               />} />
           </Switch>
         </Router>

@@ -11,16 +11,16 @@ function TrendGraph(props) {
                 <AreaChart
                     width={730}
                     height={250}
-                    data={props.trends}
+                    data={props.data}
                     margin={{
                         top: 20, right: 20, bottom: 20, left: 20,
                     }}
                 >
                     <XAxis dataKey="timestamp" />
                     <YAxis />
-                    <Area dataKey="positive" stroke="#8884d8" fill="#8884d8" />
-                    <Area dataKey="negative" stroke="#8884d8" fill="#8884d8" />
-                    <Area dataKey="neutral" stroke="#8884d8" fill="#8884d8" />
+                    <Area dataKey="positive" stroke="green" fill="green" />
+                    <Area dataKey="negative" stroke="red" fill="red" />
+                    <Area dataKey="neutral" stroke="yellow" fill="yellow" />
                     <Tooltip />
                 </AreaChart>
             </div>
