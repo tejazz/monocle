@@ -5,6 +5,7 @@ import KeywordIcon from '../assets/images/keyword-icon.svg';
 import TweetObject from './tweetObject';
 import { getSortedObject } from '../utils/functions/general';
 import TrendGraph from './TrendGraph/trendGraph';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 class SidePanel extends React.PureComponent {
     constructor(props) {
@@ -70,7 +71,7 @@ class SidePanel extends React.PureComponent {
                 </>
             );
         } else if (sidePanelSegment === 'trend') {
-            return <TrendGraph data={this.props.trend} />
+            return <TrendGraph data={this.props.trend}/>
         }
     }
 
@@ -136,11 +137,11 @@ class SidePanel extends React.PureComponent {
         let inactiveClass = 'SidePanel__Icon';
         let activeClass = `${inactiveClass} SidePanel__Icon--Active`;
 
-        switch(sidePanelSegment) {
-            case 'tweet': return isActive  ? activeClass : inactiveClass;
+        switch (sidePanelSegment) {
+            case 'tweet': return isActive ? activeClass : inactiveClass;
             case 'keyword': return isActive ? `${activeClass} SidePanel__Icon--Keyword` : `${inactiveClass} SidePanel__Icon--Keyword`;
             case 'trend': return isActive ? `${activeClass} SidePanel__Icon--Trend` : `${inactiveClass} SidePanel__Icon--Trend`;
-            default: return isActive  ? activeClass : inactiveClass;
+            default: return isActive ? activeClass : inactiveClass;
         }
     }
 
