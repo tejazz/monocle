@@ -37,6 +37,15 @@
         }
     }
 
+    &__term {
+        font-family: 'Bebas';
+        color: $primary-white;
+        font-size: $font-xl;
+        text-align: center;
+        margin: 0;
+        margin-bottom: 15px;
+    }
+
     &__graph-container {
         margin-left: -40px;
     }

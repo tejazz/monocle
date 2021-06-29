@@ -17,7 +17,7 @@ const TrendGraph = ({ data, searchTerm }) => {
     return (
         <div className='trend'>
             <p className='trend__title'>Trend Graph</p>
-            <p className='trend__term'>{searchTerm}</p>
+            <p className='trend__term'>{`'${searchTerm}'`}</p>
 
             <div className='trend__button-group'>
                 <p className={getTrendButtonClass(trend, 'positive')} onClick={() => changeTrendView('positive')}>Positive</p>
