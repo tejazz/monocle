@@ -23,7 +23,7 @@ class dashboard extends PureComponent {
     };
 
     render() {
-        const { startStreaming, stopStreaming, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, hoverCountryStatus, isConnected, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, resetStateSearchTerm, verifiedPercent, locations, trend } = this.props;
+        const { searchTerm, startStreaming, stopStreaming, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, hoverCountryStatus, isConnected, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, resetStateSearchTerm, verifiedPercent, locations, trend } = this.props;
 
         return (
             <div className='Dashboard'>
@@ -41,7 +41,7 @@ class dashboard extends PureComponent {
                         handlePowerToggleParent={this.handlePowerToggleParent}
                     />
                 </div>
-                {(this.state.isOverlayOpen) ? <div className='Overlay'/> : null}
+                {(this.state.isOverlayOpen) ? <div className='Overlay' /> : null}
                 <CountryStatus hoverCountryStatus={hoverCountryStatus} />
                 <ProgressCircle verifiedPercent={verifiedPercent} />
                 <StatisticDisplay
@@ -62,6 +62,7 @@ class dashboard extends PureComponent {
                     displayUnverifiedTweet={displayUnverifiedTweet}
                     locations={locations}
                     trend={trend}
+                    searchTerm={searchTerm}
                 />
             </div>
         );

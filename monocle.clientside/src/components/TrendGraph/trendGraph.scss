@@ -9,9 +9,35 @@
 
     &__title {
         font-size: $font-medium;
+        text-align: center;
         margin: 0;
         font-family: 'Bebas';
         color: $primary-white;
         opacity: 0.6;
+    }
+
+    &__button-group {
+        display: flex;
+        margin-left: 50px;
+    }
+
+    &__button {
+        padding: 5px;
+        border: 1px solid $primary-white;
+        font-family: 'Bebas';
+        margin-right: 5px;
+        cursor: pointer;
+        background: $grey-light;
+        color: $primary-white;
+
+        &:hover, &--active {
+            color: $grey-light;
+            background: $primary-white;
+            border: 1px solid transparent;
+        }
+    }
+
+    &__graph-container {
+        margin-left: -40px;
     }
 }

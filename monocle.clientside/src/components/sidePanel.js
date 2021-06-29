@@ -71,7 +71,7 @@ class SidePanel extends React.PureComponent {
                 </>
             );
         } else if (sidePanelSegment === 'trend') {
-            return <TrendGraph data={this.props.trend}/>
+            return <TrendGraph data={this.props.trend} searchTerm={this.props.searchTerm} />
         }
     }
 
