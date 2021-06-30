@@ -29,6 +29,7 @@ const InitialState = () => {
     displayUnverifiedTweet: [],
     hoverCountryStatus: {},
     searchTerm: 'Coronavirus',
+    trend: [],
   };
 }
 
@@ -67,7 +68,7 @@ class App extends React.PureComponent {
   }
 
   mapIncomingStream = (tweet) => {
-    let { tweetBuffer, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, searchTerm } = this.state;
+    let { tweetBuffer, tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, searchTerm, trend } = this.state;
     let tempTweetBuffer = {};
     let tempDisplayGeneralTweet = [];
 
@@ -143,6 +144,16 @@ class App extends React.PureComponent {
       neutralTweetCount += 1;
     }
 
+    // get the trend statistics
+    let trendPoint = {
+      positive: Math.round((positiveTweetCount/tweetCount) * 100),
+      negative: Math.round((negativeTweetCount/tweetCount) * 100),
+      neutral: Math.round((neutralTweetCount/tweetCount) * 100),
+      timestamp: Date.now(),
+    };
+
+    trend.push(trendPoint);
+
     this.setState({
       tweetCount,
       positiveTweetCount,
@@ -158,6 +169,7 @@ class App extends React.PureComponent {
       unverifiedLocationTweetCount: tempUnverifiedLocationTweetCount,
       displayVerifiedTweet: tempDisplayVerifiedTweet,
       displayUnverifiedTweet: tempDisplayUnverifiedTweet,
+      trend,
     });
   }
 
@@ -194,7 +206,7 @@ class App extends React.PureComponent {
   }
 
   render() {
-    const { tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, hoverCountryStatus, searchTerm } = this.state;
+    const { tweetCount, positiveTweetCount, negativeTweetCount, neutralTweetCount, locations, verifiedLocationTweetCount, unverifiedLocationTweetCount, displayGeneralTweet, displayPositiveTweet, displayNegativeTweet, displayNeutralTweet, displayVerifiedTweet, displayUnverifiedTweet, hoverCountryStatus, searchTerm, trend } = this.state;
 
     const verifiedPercent = (verifiedLocationTweetCount === 0 || tweetCount === 0) ? 0 : Math.round(((verifiedLocationTweetCount / tweetCount) * 100 + Number.EPSILON) * 100) / 100;
 
@@ -226,6 +238,7 @@ class App extends React.PureComponent {
                 isConnected={socket.connected}
                 resetStateSearchTerm={this.resetStateSearchTerm}
                 verifiedPercent={verifiedPercent}
+                trend={trend}
               />} />
           </Switch>
         </Router>

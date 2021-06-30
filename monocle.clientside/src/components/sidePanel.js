@@ -4,6 +4,8 @@ import DetailIcon from '../assets/images/details-icon.svg';
 import KeywordIcon from '../assets/images/keyword-icon.svg';
 import TweetObject from './tweetObject';
 import { getSortedObject } from '../utils/functions/general';
+import TrendGraph from './TrendGraph/trendGraph';
+import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 class SidePanel extends React.PureComponent {
     constructor(props) {
@@ -11,9 +13,9 @@ class SidePanel extends React.PureComponent {
 
         this.state = {
             openSidePanel: false,
-            tweetType: 'general',       // [general, positive, negative, neutral, verified]
-            sidePanelSegment: '',       // [tweet, keyword]
-            secondaryType: 'keyword',     // [keyword, location]
+            tweetType: 'general',           // [general, positive, negative, neutral, verified]
+            sidePanelSegment: '',           // [tweet, keyword, trend]
+            secondaryType: 'keyword',       // [keyword, location]
         };
     }
 
@@ -55,7 +57,7 @@ class SidePanel extends React.PureComponent {
                     </div>
                 </>
             );
-        } else if (this.state.sidePanelSegment === 'keyword') {
+        } else if (sidePanelSegment === 'keyword') {
             return (
                 <>
                     <div className='TweetTag'>
@@ -68,6 +70,8 @@ class SidePanel extends React.PureComponent {
                     </div>
                 </>
             );
+        } else if (sidePanelSegment === 'trend') {
+            return <TrendGraph data={this.props.trend} searchTerm={this.props.searchTerm} />
         }
     }
 
@@ -128,12 +132,23 @@ class SidePanel extends React.PureComponent {
         }
     }
 
+    getCurrentSidePanelIconClass = (isSelected, sidePanelSegment) => {
+        let isActive = isSelected === sidePanelSegment;
+        let inactiveClass = 'SidePanel__Icon';
+        let activeClass = `${inactiveClass} SidePanel__Icon--Active`;
+
+        switch (sidePanelSegment) {
+            case 'tweet': return isActive ? activeClass : inactiveClass;
+            case 'keyword': return isActive ? `${activeClass} SidePanel__Icon--Keyword` : `${inactiveClass} SidePanel__Icon--Keyword`;
+            case 'trend': return isActive ? `${activeClass} SidePanel__Icon--Trend` : `${inactiveClass} SidePanel__Icon--Trend`;
+            default: return isActive ? activeClass : inactiveClass;
+        }
+    }
+
     render() {
         const { tweetType, openSidePanel, sidePanelSegment } = this.state;
 
         const SidePanelClass = openSidePanel ? 'SidePanel' : 'SidePanel SidePanel--Hide';
-        const SidePanelIconClass = openSidePanel && sidePanelSegment === 'tweet' ? 'SidePanel__Icon SidePanel__Icon--Active' : 'SidePanel__Icon';
-        const SidePanelKeywordIconClass = openSidePanel && sidePanelSegment === 'keyword' ? 'SidePanel__Icon SidePanel__Icon--Keyword SidePanel__Icon--Active' : 'SidePanel__Icon SidePanel__Icon--Keyword';
 
         let finalDisplayTweets = [];
 
@@ -154,14 +169,20 @@ class SidePanel extends React.PureComponent {
                 <img
                     src={DetailIcon}
                     alt='detail-icon'
-                    className={SidePanelIconClass}
+                    className={this.getCurrentSidePanelIconClass(sidePanelSegment, 'tweet')}
                     onClick={() => this.toggleSidePanel('tweet')}
                 />
                 <img
                     src={KeywordIcon}
                     alt='keywordIcon-icon'
-                    className={SidePanelKeywordIconClass}
+                    className={this.getCurrentSidePanelIconClass(sidePanelSegment, 'keyword')}
                     onClick={() => this.toggleSidePanel('keyword')}
+                />
+                <img
+                    src={KeywordIcon}
+                    alt='tweetIcon-icon'
+                    className={this.getCurrentSidePanelIconClass(sidePanelSegment, 'trend')}
+                    onClick={() => this.toggleSidePanel('trend')}
                 />
 
                 {this.renderPanel(finalDisplayTweets)}
