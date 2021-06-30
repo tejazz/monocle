@@ -4,10 +4,10 @@ const Twit = require('twit');
 const Sentiment = require('sentiment');
 
 var T = new Twit({
-    consumer_key: 'IzdXfGapEofwFb4BqFg6kp3fU',
-    consumer_secret: 'S5OjtMC6SXZvTgCKbL3kozS9cIoeDbqLnmm8CWBgVoUdjy2WBw',
-    access_token: '2669827570-786eyaIhti9nKnlzXa6krxnZ9yBc653vbbQfGR3',
-    access_token_secret: '38ZSABiZil7m0jrT1t5oLPkg1gFoWaJWd3uH1TWLW6JPA',
+    consumer_key: 'MVopGkJWEzBkqtT7Senc5RzTL',
+    consumer_secret: '5ChifOadpZvaOhlMAEpbegLwltadBNm3TpDHXJJfe5DBR50e4a',
+    access_token: '2669827570-cB3RRsdbJYsh0d3I0PTmVIYFyPbbm44ibtGpPll',
+    access_token_secret: 'tVqxV9JgyKRjVGlo7ZerIAmtUpMXh7e1wQM0jz6ZCmyPa',
     timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
     strictSSL: true,     // optional - requires SSL certificates to be valid.
 });
