@@ -3,21 +3,17 @@ import './controlButtonSection.scss';
 import PowerOn from '../assets/images/power-icon.svg';
 import PowerOff from '../assets/images/power-off-icon.svg';
 
-class ControlButtonSection extends React.PureComponent {
-    handlePowerToggle = () => this.props.handlePowerToggleParent('control');
-
-    render() {
-        return (
-            <div className='ControlButtonSection'>
-                <img
-                    src={(this.props.isPowerOn) ? PowerOn : PowerOff}
-                    className='ControlButtonSection__Button'
-                    onClick={this.handlePowerToggle}
-                    alt='power-icon'
-                />
-            </div>
-        );
-    }
-}
+const ControlButtonSection = ({isPowerOn, handlePowerToggleParent}) => {
+    return (
+        <div className='ControlButtonSection'>
+            <img
+                src={(isPowerOn) ? PowerOn : PowerOff}
+                className='ControlButtonSection__Button'
+                onClick={() => handlePowerToggleParent('control')}
+                alt='power-icon'
+            />
+        </div>
+    );
+};
 
 export default ControlButtonSection;

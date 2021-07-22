@@ -174,19 +174,19 @@ class App extends React.PureComponent {
   }
 
   startStreaming = () => {
-    if (!socket.connected) {
-      alert('No connection available. Please check the connection.');
-      return;
-    }
+    // if (!socket.connected) {
+    //   alert('No connection available. Please check the connection.');
+    //   return;
+    // }
 
     socket.emit((this.state.startCounter >= 1) ? 'restart stream' : 'start stream', () => { });
   }
 
   stopStreaming = () => {
-    if (!socket.connected) {
-      alert('No connection available. Please check the connection.');
-      return;
-    }
+    // if (!socket.connected) {
+    //   alert('No connection available. Please check the connection.');
+    //   return;
+    // }
 
     socket.emit('stop stream', () => { });
   }
@@ -196,10 +196,10 @@ class App extends React.PureComponent {
   }
 
   resetStateSearchTerm = async (searchTerm) => {
-    if (!socket.connected) {
-      alert('No connection available. Please check the connection.');
-      return;
-    }
+    // if (!socket.connected) {
+    //   alert('No connection available. Please check the connection.');
+    //   return;
+    // }
 
     await this.setState({ ...InitialState(), searchTerm });
     socket.emit('update track', searchTerm);
