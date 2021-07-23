@@ -1,7 +1,7 @@
 import React from 'react';
 import './controlButtonSection.scss';
-import PowerOn from '../assets/images/power-icon.svg';
-import PowerOff from '../assets/images/power-off-icon.svg';
+import PowerOn from '../../assets/images/power-icon.svg';
+import PowerOff from '../../assets/images/power-off-icon.svg';
 
 const ControlButtonSection = ({isPowerOn, handlePowerToggleParent}) => {
     return (

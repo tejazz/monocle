@@ -1,10 +1,10 @@
 import React from 'react';
 import './sidePanel.scss';
-import DetailIcon from '../assets/images/details-icon.svg';
-import KeywordIcon from '../assets/images/keyword-icon.svg';
-import TweetObject from './tweetObject';
-import { getSortedObject } from '../utils/functions/general';
-import TrendGraph from './TrendGraph/trendGraph';
+import DetailIcon from '../../assets/images/details-icon.svg';
+import KeywordIcon from '../../assets/images/keyword-icon.svg';
+import TweetObject from '../TweetObject/tweetObject';
+import { getSortedObject } from '../../utils/functions/general';
+import TrendGraph from '../TrendGraph/trendGraph';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 class SidePanel extends React.PureComponent {

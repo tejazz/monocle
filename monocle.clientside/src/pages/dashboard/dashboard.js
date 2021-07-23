@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import './dashboard.scss';
-import MapSection from '../../components/mapSection';
-import ControlButtonSection from '../../components/controlButtonSection';
-import StatisticDisplay from '../../components/statisticDisplay';
-import CountryStatus from '../../components/countryStatus';
-import SidePanel from '../../components/sidePanel';
-import SearchTermBar from '../../components/searchTermBar';
-import ProgressCircle from '../../components/progressCircle';
-import LegendSection from '../../components/legendSection';
+import MapSection from '../../components/MapSection/mapSection';
+import ControlButtonSection from '../../components/ControlButtonSection/controlButtonSection';
+import StatisticDisplay from '../../components/StatisticsDisplay/statisticDisplay';
+import CountryStatus from '../../components/CountryStatus/countryStatus';
+import SidePanel from '../../components/SidePanel/sidePanel';
+import SearchTermBar from '../../components/SearchTermBar/searchTermBar';
+import ProgressCircle from '../../components/ProgressCircle/progressCircle';
+import LegendSection from '../../components/LegendSection/legendSection';
 
 class dashboard extends PureComponent {
     state = {

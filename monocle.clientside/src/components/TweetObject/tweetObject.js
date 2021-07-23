@@ -1,6 +1,6 @@
 import React from 'react';
 import './tweetObject.scss';
-import { getDate } from '../utils/functions/general';
+import { getDate } from '../../utils/functions/general';
 
 const TweetObject = (props) => {
     const { tweet } = props;

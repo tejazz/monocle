@@ -1,6 +1,6 @@
 import React from 'react';
 import './statisticDisplay.scss';
-import CounterTile from './counterTile';
+import CounterTile from '../CounterTile/counterTile';
 
 const StatisticDisplay = (props) => {
     return (
