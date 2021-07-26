@@ -1,26 +1,32 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './searchTermBar.scss';
 
-const eventPressEvent = async (e, handleInputChange, props, inputTerm) => {
-    if (e.keyCode === 13) {
-        props.resetStateSearchTerm(inputTerm);
-        await handleInputChange('');
-        props.handlePowerToggleParent('search');
-    }
-};
-
 const SearchTermBar = (props) => {
+    const {resetStateSearchTerm, handlePowerToggleParent} = props;
     const [inputTerm, handleInputChange] = useState('');
     const inputRef = useRef();
 
+    const triggerChange = useCallback(() => {
+        resetStateSearchTerm(inputTerm);
+        handleInputChange('');
+        handlePowerToggleParent('search');
+    }, [inputTerm, resetStateSearchTerm, handlePowerToggleParent]);
+
+    const keyPressEvent = useCallback((e) => {
+        if (e.keyCode === 13) {
+           triggerChange();
+        }
+    }, [triggerChange]);
+
     useEffect(() => {
-        inputRef.current.addEventListener('keydown', async (e) => await eventPressEvent(e, handleInputChange, props, inputTerm));
+        inputRef.current.addEventListener('keydown', keyPressEvent);
         let parentInputRef = inputRef;
 
         return () => {
-            parentInputRef.current.removeEventListener('keydown', async (e) => await eventPressEvent(e, handleInputChange, props, inputTerm));
+            console.log('clear event listener');
+            parentInputRef.current.removeEventListener('keydown', keyPressEvent);
         };
-    }, [inputTerm, handleInputChange, props])
+    }, [keyPressEvent]);
 
     return (
         <div className='SearchTermBar'>
