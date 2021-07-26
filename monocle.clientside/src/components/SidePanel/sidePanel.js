@@ -80,7 +80,6 @@ const SidePanel = (props) => {
     }
 
     const renderSecondarySection = (secondaryType) => {
-        console.log(secondaryType);
         // map the words based on sentiment
         // 1. positive words
         let positiveWords = [];
