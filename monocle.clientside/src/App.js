@@ -174,20 +174,10 @@ class App extends React.PureComponent {
   }
 
   startStreaming = () => {
-    // if (!socket.connected) {
-    //   alert('No connection available. Please check the connection.');
-    //   return;
-    // }
-
     socket.emit((this.state.startCounter >= 1) ? 'restart stream' : 'start stream', () => { });
   }
 
   stopStreaming = () => {
-    // if (!socket.connected) {
-    //   alert('No connection available. Please check the connection.');
-    //   return;
-    // }
-
     socket.emit('stop stream', () => { });
   }
 
