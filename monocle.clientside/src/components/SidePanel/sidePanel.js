@@ -139,13 +139,13 @@ const SidePanel = (props) => {
         let finalDisplayTweets = [];
 
         switch (tweetType) {
-            case 'general': finalDisplayTweets = props.displayGeneralTweets;
+            case 'general': finalDisplayTweets = props.displayGeneralTweet;
                 break;
-            case 'positive': finalDisplayTweets = props.displayPositiveTweets;
+            case 'positive': finalDisplayTweets = props.displayPositiveTweet;
                 break;
-            case 'negative': finalDisplayTweets = props.displayNegativeTweets;
+            case 'negative': finalDisplayTweets = props.displayNegativeTweet;
                 break;
-            case 'neutral': finalDisplayTweets = props.displayNeutralTweets;
+            case 'neutral': finalDisplayTweets = props.displayNeutralTweet;
                 break;
             default: finalDisplayTweets = props.displayVerifiedTweet;
                 break;
