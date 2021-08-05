@@ -1,4 +1,4 @@
-@import "../App.scss";
+@import '../../App.scss';
 
 .SidePanel {
   position: absolute;
@@ -139,5 +139,15 @@
       &__Count {
           margin: 0;
       }
+  }
+
+  .EmptyCaption {
+    opacity: 0.6;
+    display: block;
+    width: fit-content;
+    font-family: 'Bebas';
+    font-size: $font-medium;
+    color: $primary-white;
+    margin-top: 0;
   }
 }

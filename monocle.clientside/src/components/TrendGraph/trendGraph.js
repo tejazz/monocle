@@ -8,8 +8,6 @@ const TrendGraph = ({ data, searchTerm }) => {
 
     const [trend, changeTrendView] = useState('all');
 
-    console.log(trend);
-
     setInterval(() => {
         keyValue = Math.random();
     }, 5000);
