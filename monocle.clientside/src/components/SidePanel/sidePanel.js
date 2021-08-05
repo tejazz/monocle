@@ -32,7 +32,7 @@ const SidePanel = (props) => {
         return (
             <div
                 className={tweetType === label || displayTypes.secondaryType === label ? 'TweetTagItem TweetTagItem--Active' : 'TweetTagItem'}
-                onClick={() => tweetType !== label ? ((sidePanelSegment === 'tweet') ? updateDisplayTypes(currentState => { return { ...currentState, tweetType: label }}) : updateDisplayTypes(currentState => { return { ...currentState, secondaryType: label }})) : null}
+                onClick={() => tweetType !== label ? ((sidePanelSegment === 'tweet') ? updateDisplayTypes(currentState => { return { ...currentState, tweetType: label } }) : updateDisplayTypes(currentState => { return { ...currentState, secondaryType: label } })) : null}
             >
                 <p className='TweetTagItem__Label'>{label}</p>
             </div>
@@ -55,8 +55,8 @@ const SidePanel = (props) => {
                     </div>
 
                     <div className='TweetSection'>
-                        {finalDisplayTweets.length === 0 
-                            ? <p className='EmptyCaption'>No {tweetType} Tweets To Show</p> 
+                        {finalDisplayTweets.length === 0
+                            ? <p className='EmptyCaption'>No {tweetType} Tweets To Show</p>
                             : finalDisplayTweets.map((tweet) => <TweetObject key={tweet.id} tweet={tweet} />)}
                     </div>
                 </>
@@ -139,6 +139,25 @@ const SidePanel = (props) => {
         }
     }
 
+    const mapDisplayTweets = (tweetType) => {
+        let finalDisplayTweets = [];
+
+        switch (tweetType) {
+            case 'general': finalDisplayTweets = props.displayGeneralTweets;
+                break;
+            case 'positive': finalDisplayTweets = props.displayPositiveTweets;
+                break;
+            case 'negative': finalDisplayTweets = props.displayNegativeTweets;
+                break;
+            case 'neutral': finalDisplayTweets = props.displayNeutralTweets;
+                break;
+            default: finalDisplayTweets = props.displayVerifiedTweet;
+                break;
+        }
+
+        return finalDisplayTweets;
+    }
+
     const getCurrentSidePanelIconClass = (isSelected, sidePanelSegment) => {
         let isActive = isSelected === sidePanelSegment;
         let inactiveClass = 'SidePanel__Icon';
@@ -157,19 +176,7 @@ const SidePanel = (props) => {
 
     const SidePanelClass = openSidePanel ? 'SidePanel' : 'SidePanel SidePanel--Hide';
 
-    let finalDisplayTweets = [];
-
-    if (tweetType === 'general') {
-        finalDisplayTweets = props.displayGeneralTweet;
-    } else if (tweetType === 'positive') {
-        finalDisplayTweets = props.displayPositiveTweet;
-    } else if (tweetType === 'negative') {
-        finalDisplayTweets = props.displayNegativeTweet;
-    } else if (tweetType === 'neutral') {
-        finalDisplayTweets = props.displayNeutralTweet;
-    } else {
-        finalDisplayTweets = props.displayVerifiedTweet;
-    }
+    let finalDisplayTweets = mapDisplayTweets(tweetType);
 
     return (
         <div className={SidePanelClass}>
