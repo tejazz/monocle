@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './sidePanel.scss';
 import DetailIcon from '../../assets/images/details-icon.svg';
 import KeywordIcon from '../../assets/images/keyword-icon.svg';
@@ -25,10 +25,11 @@ const SidePanel = (props) => {
     }
 
     const renderTagItem = (sidePanelSegment, tweetType, label) => {
+        let handleDisplayType = ((sidePanelSegment === 'tweet') ? updateDisplayTypes(currentState => ({ ...currentState, tweetType: label })) : updateDisplayTypes(currentState => ({ ...currentState, secondaryType: label })));
         return (
             <div
                 className={tweetType === label || displayTypes.secondaryType === label ? 'TweetTagItem TweetTagItem--Active' : 'TweetTagItem'}
-                onClick={() => tweetType !== label ? ((sidePanelSegment === 'tweet') ? updateDisplayTypes(currentState => { return { ...currentState, tweetType: label } }) : updateDisplayTypes(currentState => { return { ...currentState, secondaryType: label } })) : null}
+                onClick={() => tweetType !== label ? handleDisplayType : null}
             >
                 <p className='TweetTagItem__Label'>{label}</p>
             </div>

@@ -186,11 +186,6 @@ class App extends React.PureComponent {
   }
 
   resetStateSearchTerm = async (searchTerm) => {
-    // if (!socket.connected) {
-    //   alert('No connection available. Please check the connection.');
-    //   return;
-    // }
-
     await this.setState({ ...InitialState(), searchTerm });
     socket.emit('update track', searchTerm);
   }
