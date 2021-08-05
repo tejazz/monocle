@@ -16,10 +16,6 @@ const SidePanel = (props) => {
     const [sidePanelItems, toggleSidePanel] = useState({ openSidePanel: false, sidePanelSegment: '' });
     const [displayTypes, updateDisplayTypes] = useState({ tweetType: 'general', secondaryType: 'keyword' });
 
-    // useEffect = (() => {
-
-    // }, []);
-
     const callToggleSidePanel = (sidePanelSegment) => {
         const sidePanelStatus = (sidePanelSegment === sidePanelItems.sidePanelSegment && sidePanelItems.openSidePanel) ? false : true;
 
