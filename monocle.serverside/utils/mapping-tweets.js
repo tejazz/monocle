@@ -1,3 +1,6 @@
+const Sentiment = require('sentiment');
+const sentiment = new Sentiment();
+
 function fetchTweetObject(tweet) {
     let tweetText = (tweet.extended_tweet) ? tweet.extended_tweet.full_text : tweet.text;
 
