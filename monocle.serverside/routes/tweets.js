@@ -2,6 +2,7 @@
 // func() => help stream tweets based on values and sentiments
 const Twit = require('twit');
 const Sentiment = require('sentiment');
+const { fetchTweetObject } = require('../utils/mapping-tweets');
 
 var T = new Twit({
     consumer_key: 'MVopGkJWEzBkqtT7Senc5RzTL',
@@ -29,7 +30,7 @@ function updateStream(socket, term) {
     stream = T.stream('statuses/filter', { 'track': term });
 
     stream.on('tweet', function (tweet) {
-        let TweetObject = getTweetObject(tweet);
+        let TweetObject = fetchTweetObject(tweet);
 
         socket.emit('latest tweets', TweetObject);
     });
@@ -92,7 +93,7 @@ module.exports = (io) => {
             }
 
             stream.on('tweet', function (tweet) {
-                let TweetObject = getTweetObject(tweet);
+                let TweetObject = fetchTweetObject(tweet);
 
                 socket.emit('latest tweets', TweetObject);
             });
@@ -106,7 +107,7 @@ module.exports = (io) => {
             if (!isStreamStopped) {
                 stream.stop();
                 isStreamStopped = true;
-            } 
+            }
 
             console.log('Disconnected');
         });
