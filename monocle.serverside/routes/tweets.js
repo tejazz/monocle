@@ -5,10 +5,10 @@ const Sentiment = require('sentiment');
 const { fetchTweetObject } = require('../utils/mapping-tweets');
 
 var T = new Twit({
-    consumer_key: 'MVopGkJWEzBkqtT7Senc5RzTL',
-    consumer_secret: '5ChifOadpZvaOhlMAEpbegLwltadBNm3TpDHXJJfe5DBR50e4a',
-    access_token: '2669827570-cB3RRsdbJYsh0d3I0PTmVIYFyPbbm44ibtGpPll',
-    access_token_secret: 'tVqxV9JgyKRjVGlo7ZerIAmtUpMXh7e1wQM0jz6ZCmyPa',
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token: process.env.TWITTER_ACCESS_TOKEN,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
     timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
     strictSSL: true,     // optional - requires SSL certificates to be valid.
 });
