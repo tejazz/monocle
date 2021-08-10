@@ -50,7 +50,7 @@ const Dashboard = (props) => {
             <LegendSection />
             <MapSection {...props} />
             <SidePanel
-                handleOverlayChange={() => handleOverlayChange(!isOverlayOpen)}
+                handleOverlayChange={handleOverlayChange}
                 displayGeneralTweet={displayGeneralTweet}
                 displayPositiveTweet={displayPositiveTweet}
                 displayNegativeTweet={displayNegativeTweet}
