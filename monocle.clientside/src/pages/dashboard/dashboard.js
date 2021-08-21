@@ -19,6 +19,10 @@ const Dashboard = (props) => {
     }, [isPowerOn, startStreaming, stopStreaming]);
 
     const handlePowerToggleParent = (source) => {
+        const clickPowerOnWithEmptyTerm = !searchTerm.length && !isPowerOn && source === 'control'
+        if(clickPowerOnWithEmptyTerm){
+         return alert("Enter a search term")
+        }
         handlePowerToggleChange(source === 'control' ? !isPowerOn : true);
     };
 
