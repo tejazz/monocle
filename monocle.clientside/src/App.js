@@ -28,7 +28,7 @@ const InitialState = () => {
     displayVerifiedTweet: [],
     displayUnverifiedTweet: [],
     hoverCountryStatus: {},
-    searchTerm: 'Coronavirus',
+    searchTerm: '',
     trend: [],
   };
 }

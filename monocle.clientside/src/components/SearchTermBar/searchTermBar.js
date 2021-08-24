@@ -8,6 +8,9 @@ const SearchTermBar = (props) => {
     useEffect(() => {
         const keyPressEvent = (e) => {
             if (e.keyCode === 13) {
+                if(!inputRef.current.value.length){
+                  return alert("Enter a search term")
+                }
                 resetStateSearchTerm(inputRef.current.value);
                 inputRef.current.value = '';
                 handlePowerToggleParent('search');
