@@ -4,6 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install:all": "concurrently \"npm run install:client\" \"npm run install:server\"",
+    "install:client": "cd ./monocle.clientside && npm install",
+    "install:server": "cd ./monocle.serverside && npm install",
+    "fix:all": "concurrently \"npm run fix:client\" \"npm run fix:server\"",
+    "fix:client": "cd ./monocle.clientside && rmdir /Q/S node_modules && npm install",
+    "fix:server": "cd ./monocle.serverside && rmdir /Q/S node_modules && npm install",
     "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
     "start:client": "cd ./monocle.clientside && npm start",
     "start:server": "cd ./monocle.serverside && npm start",
