@@ -8,7 +8,7 @@ const TweetObject = (props) => {
 
     return (
         <div className='TweetItem'>
-            <div className='TweetItem__Group'>
+            <div onClick={() => window.open(tweet.url)}className='TweetItem__Group'>
                 <p className='TweetItem__User'>{tweet.user}</p>
                 <p className='TweetItem__Followers'>({tweet.followers})</p>
             </div>

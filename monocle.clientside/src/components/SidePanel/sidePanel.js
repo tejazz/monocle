@@ -25,11 +25,10 @@ const SidePanel = (props) => {
     }
 
     const renderTagItem = (sidePanelSegment, tweetType, label) => {
-        let handleDisplayType = ((sidePanelSegment === 'tweet') ? updateDisplayTypes(currentState => ({ ...currentState, tweetType: label })) : updateDisplayTypes(currentState => ({ ...currentState, secondaryType: label })));
         return (
             <div
                 className={tweetType === label || displayTypes.secondaryType === label ? 'TweetTagItem TweetTagItem--Active' : 'TweetTagItem'}
-                onClick={() => tweetType !== label ? handleDisplayType : null}
+                onClick={() => tweetType !== label ? ((sidePanelSegment === 'tweet') ? updateDisplayTypes(currentState => ({ ...currentState, tweetType: label })) : updateDisplayTypes(currentState => ({ ...currentState, secondaryType: label }))) : null}
             >
                 <p className='TweetTagItem__Label'>{label}</p>
             </div>
