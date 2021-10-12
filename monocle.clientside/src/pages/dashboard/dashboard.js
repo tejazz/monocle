@@ -20,9 +20,11 @@ const Dashboard = (props) => {
 
     const handlePowerToggleParent = (source) => {
         const isEmptyTermOnStartUp = !searchTerm.length && !isPowerOn && source === 'control'
+        
         if(isEmptyTermOnStartUp){
          return alert("Enter a search term")
         }
+        
         handlePowerToggleChange(source === 'control' ? !isPowerOn : true);
     };
 
@@ -54,7 +56,7 @@ const Dashboard = (props) => {
             <LegendSection />
             <MapSection {...props} />
             <SidePanel
-                handleOverlayChange={() => handleOverlayChange(!isOverlayOpen)}
+                handleOverlayChange={handleOverlayChange}
                 displayGeneralTweet={displayGeneralTweet}
                 displayPositiveTweet={displayPositiveTweet}
                 displayNegativeTweet={displayNegativeTweet}

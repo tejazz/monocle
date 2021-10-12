@@ -4,10 +4,10 @@ const Twit = require('twit');
 const Sentiment = require('sentiment');
 
 var T = new Twit({
-    consumer_key: 'MVopGkJWEzBkqtT7Senc5RzTL',
-    consumer_secret: '5ChifOadpZvaOhlMAEpbegLwltadBNm3TpDHXJJfe5DBR50e4a',
-    access_token: '2669827570-cB3RRsdbJYsh0d3I0PTmVIYFyPbbm44ibtGpPll',
-    access_token_secret: 'tVqxV9JgyKRjVGlo7ZerIAmtUpMXh7e1wQM0jz6ZCmyPa',
+    consumer_key: 'pdyToJBwTk0HWsFEJgisiOyE0',
+    consumer_secret: 'kxX5eQxKZYEIg5wYX7y1b6BnNjTthfPwC4Bgm9AeV61oFd8cOA',
+    access_token: '2669827570-CGRNjwxfRhRxzfka3iqDXuxKs0yluArNuNYssUw',
+    access_token_secret: 'pVBH2V28ZOu6BCJ2kjKLj79ce6KXiPjHknO8KMVC71GbL',
     timeout_ms: 60 * 1000,  // optional HTTP request timeout to apply to all requests.
     strictSSL: true,     // optional - requires SSL certificates to be valid.
 });
@@ -52,6 +52,7 @@ function getTweetObject(tweet) {
         userImage: tweet.user.profile_image_url,
         timestamp: tweet.timestamp_ms,
         sentiments: sentiment.analyze((tweet.extended_tweet) ? tweet.extended_tweet.full_text : tweet.text),
+        url: `https://twitter.com/${tweet.user.id}/status/${tweet.id_str}`,
     };
 
     return TweetObject;
